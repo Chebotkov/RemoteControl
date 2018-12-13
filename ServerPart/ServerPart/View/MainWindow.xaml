@@ -25,7 +25,7 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBox ToolTip="Enter your IP here" Name="textField" Grid.Row="0" Grid.ColumnSpan="2" DataContext="{Binding EnteredIP}" Margin="40 21" FontSize="18" Foreground="#FF0D00FF" Background="#FF62C367"/>
+            <TextBox ToolTip="Enter your IP here" Name="textField" Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding EnteredIP, UpdateSourceTrigger=PropertyChanged}" Margin="40 21" FontSize="18" Foreground="#FF0D00FF" Background="#FF62C367"/>
             <Button Grid.Row="1" Content="Open Connection" Name="CreateConnection" Grid.Column="0" Command="{Binding OpenConnection}" Margin="15" Foreground="#FF0D00FF" Background="#FF62C367"></Button>
             <Button Grid.Row="1" Content="Close Connection" Name="CloseConnection" Grid.Column="1" Command="{Binding CloseConnection}" Margin="15" Foreground="#FF0D00FF" Background="#FF62C367"></Button>
         </Grid>

@@ -6,9 +6,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Windows;
 
-namespace ServerPart
+namespace ServerPart.Model
 {
-    public enum Buttons { leftbutton = 1, rightbutton, start = 3, previousSlide, nextSlide, end, SymbolRecieved = 50, GetDrives = 100, GetPresentations, IsFileExists, RunFile, RunPresentation, PreviousDirectory };
+    public enum Buttons { StartPresentation = 1, PreviousSlide, NextSlide, EndPresentation, leftbutton, rightbutton, SymbolRecieved = 50, GetDrives = 100, GetPresentations, IsFileExists, RunFile, RunPresentation, PreviousDirectory };
 
     public class ServerCreator
     {
@@ -59,9 +59,8 @@ namespace ServerPart
                     // Getting data
                     byte[] recBytes = new byte[1024];
                     int nBytes = handler.Receive(recBytes);
-
                     switch ((Buttons)recBytes[0])
-                    {
+                    {                         
                         case Buttons.SymbolRecieved:
                             {
                                 string symbol = DataBinary.GetNormalRepresentation<string>(recBytes, 1, recBytes.Length - 2);
@@ -79,25 +78,25 @@ namespace ServerPart
                         case Buttons.rightbutton:
                             Mouse.Click(Buttons.rightbutton);
                             break;
-                        case Buttons.start:
+                        case Buttons.StartPresentation:
                             System.Windows.Forms.SendKeys.SendWait("{F5}");
                             break;
-                        case Buttons.nextSlide:
+                        case Buttons.NextSlide:
                             System.Windows.Forms.SendKeys.SendWait("{RIGHT}");
 
-                            byte[] bytess = null;
+                            /*byte[] bytess = null;
                             using (MemoryStream memoryStream = new MemoryStream())
                             {
                                 ScreenShot.GetScreenShot().Save(memoryStream, ImageFormat.Png);
                                 bytess = memoryStream.GetBuffer();
                                 MessageBox.Show(memoryStream.Length.ToString());
                             }
-                            handler.Send(bytess);
+                            handler.Send(bytess);*/
                             break;
-                        case Buttons.previousSlide:
+                        case Buttons.PreviousSlide:
                             System.Windows.Forms.SendKeys.SendWait("{LEFT}");
                             break;
-                        case Buttons.end:
+                        case Buttons.EndPresentation:
                             System.Windows.Forms.SendKeys.SendWait("{ESC}");
                             break;
                         case Buttons.GetDrives:

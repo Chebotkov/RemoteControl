@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ServerPart.Model;
 
 namespace ServerPart.ViewModel
 {
@@ -13,7 +15,9 @@ namespace ServerPart.ViewModel
     {
         private BaseCommand openConnection;
         private BaseCommand closeConnection;
-        private string enteredIP;
+        private string enteredIP = null;
+        private ServerCreator server;
+        private bool isConnectionOpened = false;
 
         public string EnteredIP
         {
@@ -35,8 +39,30 @@ namespace ServerPart.ViewModel
                 return openConnection ??
                 (openConnection = new BaseCommand(obj =>
                 {
-                    MessageBox.Show("Connection opened");
-                }));
+                    if (IPAddress.TryParse(enteredIP, out IPAddress ipAddress) && !isConnectionOpened)
+                    {
+                        server = new ServerCreator(ipAddress);
+                        CreateConnection();
+                        isConnectionOpened = true;
+
+                        MessageBox.Show("Connection opened");
+                    }
+
+                    else
+                    {
+                        MessageBox.Show("Wrong ip");
+                    }
+                },
+                (obj) =>
+                {
+                    if (!isConnectionOpened && !String.IsNullOrEmpty(enteredIP))
+                    {
+                        return true;
+                    }
+
+                    return false;
+                }
+                ));
             }
             private set { }
         }
@@ -48,15 +74,15 @@ namespace ServerPart.ViewModel
                 return closeConnection ??
                 (closeConnection = new BaseCommand(obj =>
                 {
-                    MessageBox.Show("Connection closed");
-                    /*
-                    if (IPAddress.TryParse(textField.Text, out IPAddress ipAddress))// && SetConnection.isRunning == false))
+                    if (server != null)
                     {
-                        //SetConnection.ipAddress = ipAddress;
-                        //await Task.Factory.StartNew(SetConnection.Set);
+                        server.CloseConnection();
                     }
-                    */
-                }));
+
+                    isConnectionOpened = false;
+                    MessageBox.Show("Connection closed");
+                },
+                (obj) => isConnectionOpened));
             }
             private set { }
         }
@@ -65,6 +91,11 @@ namespace ServerPart.ViewModel
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        private async void CreateConnection()
+        {
+            await Task.Factory.StartNew(server.SetConnection);
         }
     }
 }

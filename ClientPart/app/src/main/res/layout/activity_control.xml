@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="7"
+    tools:context=".ControlActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hi, Bitch :*"
+        android:textSize="50dp"
+        android:layout_weight="7"
+        />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/StartPresentation"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="Start presentation"
+            android:onClick="onClick" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="72dp"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/PreviousSlide"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Previous"
+                android:onClick="onClick" />
+            <Button
+                android:id="@+id/ControlPanel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Control"
+                android:onClick="onClick" />
+            <Button
+                android:id="@+id/NextSlide"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Next"
+                android:onClick="onClick"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/EndPresentation"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="End presentation"
+            android:onClick="onClick" />
+    </TableLayout>
+</LinearLayout>

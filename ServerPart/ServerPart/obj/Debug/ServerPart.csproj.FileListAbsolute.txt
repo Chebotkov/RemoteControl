@@ -28,3 +28,18 @@ D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\ServerPart.exe
 D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\ServerPart.pdb
 D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\View\MainWindow.g.cs
 D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\View\MainWindow.baml
+D:\Projects\RemoteControl\ServerPart\ServerPart\obj\Debug\ServerPart.csprojResolveAssemblyReference.cache
+D:\Projects\RemoteControl\ServerPart\ServerPart\obj\Debug\View\MainWindow.g.cs
+D:\Projects\RemoteControl\ServerPart\ServerPart\obj\Debug\App.g.cs
+D:\Projects\RemoteControl\ServerPart\ServerPart\obj\Debug\ServerPart_MarkupCompile.cache
+D:\Projects\RemoteControl\ServerPart\ServerPart\obj\Debug\ServerPart_MarkupCompile.lref
+D:\Projects\RemoteControl\ServerPart\ServerPart\obj\Debug\ServerPart.exe
+D:\Projects\RemoteControl\ServerPart\ServerPart\obj\Debug\ServerPart.pdb
+D:\Projects\RemoteControl\ServerPart\ServerPart\bin\Debug\ServerPart.exe.config
+D:\Projects\RemoteControl\ServerPart\ServerPart\bin\Debug\ServerPart.exe
+D:\Projects\RemoteControl\ServerPart\ServerPart\bin\Debug\ServerPart.pdb
+D:\Projects\RemoteControl\ServerPart\ServerPart\obj\Debug\View\MainWindow.baml
+D:\Projects\RemoteControl\ServerPart\ServerPart\obj\Debug\ServerPart.g.resources
+D:\Projects\RemoteControl\ServerPart\ServerPart\obj\Debug\ServerPart.Properties.Resources.resources
+D:\Projects\RemoteControl\ServerPart\ServerPart\obj\Debug\ServerPart.csproj.GenerateResource.Cache
+D:\Projects\RemoteControl\ServerPart\ServerPart\obj\Debug\ServerPart.csproj.CoreCompileInputs.cache
