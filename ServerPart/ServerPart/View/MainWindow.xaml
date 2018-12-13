@@ -1,0 +1,33 @@
+﻿<Window x:Name="MainWindow1" x:Class="ServerPart.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ServerPart"
+        mc:Ignorable="d"
+        Title="Server" Height="326" Width="549">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Image Source="pack://application:,,,/Resources/Background.jpg" Stretch="Fill" Grid.RowSpan="2" Grid.ColumnSpan="2"></Image>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBox ToolTip="Enter your IP here" Name="textField" Grid.Row="0" Grid.ColumnSpan="2" DataContext="{Binding EnteredIP}" Margin="40 21" FontSize="18" Foreground="#FF0D00FF" Background="#FF62C367"/>
+            <Button Grid.Row="1" Content="Open Connection" Name="CreateConnection" Grid.Column="0" Command="{Binding OpenConnection}" Margin="15" Foreground="#FF0D00FF" Background="#FF62C367"></Button>
+            <Button Grid.Row="1" Content="Close Connection" Name="CloseConnection" Grid.Column="1" Command="{Binding CloseConnection}" Margin="15" Foreground="#FF0D00FF" Background="#FF62C367"></Button>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,7 @@
+C:\Users\Павел\source\repos\ServerPart\ConsoleClient\ConsoleClient\bin\Debug\ConsoleClient.exe.config
+C:\Users\Павел\source\repos\ServerPart\ConsoleClient\ConsoleClient\bin\Debug\ConsoleClient.exe
+C:\Users\Павел\source\repos\ServerPart\ConsoleClient\ConsoleClient\bin\Debug\ConsoleClient.pdb
+C:\Users\Павел\source\repos\ServerPart\ConsoleClient\ConsoleClient\obj\Debug\ConsoleClient.csproj.CoreCompileInputs.cache
+C:\Users\Павел\source\repos\ServerPart\ConsoleClient\ConsoleClient\obj\Debug\ConsoleClient.exe
+C:\Users\Павел\source\repos\ServerPart\ConsoleClient\ConsoleClient\obj\Debug\ConsoleClient.pdb
+C:\Users\Павел\source\repos\ServerPart\ConsoleClient\ConsoleClient\obj\Debug\ConsoleClient.csprojResolveAssemblyReference.cache

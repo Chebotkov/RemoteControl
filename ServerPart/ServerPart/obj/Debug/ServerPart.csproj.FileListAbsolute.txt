@@ -1,0 +1,30 @@
+C:\Users\Павел\source\repos\ServerPart\ServerPart\bin\Debug\ServerPart.exe.config
+C:\Users\Павел\source\repos\ServerPart\ServerPart\bin\Debug\ServerPart.exe
+C:\Users\Павел\source\repos\ServerPart\ServerPart\bin\Debug\ServerPart.pdb
+C:\Users\Павел\source\repos\ServerPart\ServerPart\obj\Debug\ServerPart.csprojResolveAssemblyReference.cache
+C:\Users\Павел\source\repos\ServerPart\ServerPart\obj\Debug\MainWindow.g.cs
+C:\Users\Павел\source\repos\ServerPart\ServerPart\obj\Debug\App.g.cs
+C:\Users\Павел\source\repos\ServerPart\ServerPart\obj\Debug\ServerPart_MarkupCompile.cache
+C:\Users\Павел\source\repos\ServerPart\ServerPart\obj\Debug\ServerPart_MarkupCompile.lref
+C:\Users\Павел\source\repos\ServerPart\ServerPart\obj\Debug\MainWindow.baml
+C:\Users\Павел\source\repos\ServerPart\ServerPart\obj\Debug\ServerPart.g.resources
+C:\Users\Павел\source\repos\ServerPart\ServerPart\obj\Debug\ServerPart.Properties.Resources.resources
+C:\Users\Павел\source\repos\ServerPart\ServerPart\obj\Debug\ServerPart.csproj.GenerateResource.Cache
+C:\Users\Павел\source\repos\ServerPart\ServerPart\obj\Debug\ServerPart.csproj.CoreCompileInputs.cache
+C:\Users\Павел\source\repos\ServerPart\ServerPart\obj\Debug\ServerPart.exe
+C:\Users\Павел\source\repos\ServerPart\ServerPart\obj\Debug\ServerPart.pdb
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\bin\Debug\ServerPart.exe.config
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\bin\Debug\ServerPart.exe
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\bin\Debug\ServerPart.pdb
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\ServerPart.csprojResolveAssemblyReference.cache
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\App.g.cs
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\ServerPart_MarkupCompile.cache
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\ServerPart_MarkupCompile.lref
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\ServerPart.g.resources
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\ServerPart.Properties.Resources.resources
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\ServerPart.csproj.GenerateResource.Cache
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\ServerPart.csproj.CoreCompileInputs.cache
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\ServerPart.exe
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\ServerPart.pdb
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\View\MainWindow.g.cs
+D:\3kyrs 2.0\курсовая\ServerPart\ServerPart\obj\Debug\View\MainWindow.baml
