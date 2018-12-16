@@ -83,15 +83,22 @@ namespace ServerPart.Model
                             break;
                         case Buttons.NextSlide:
                             System.Windows.Forms.SendKeys.SendWait("{RIGHT}");
-
-                            /*byte[] bytess = null;
+                            
                             using (MemoryStream memoryStream = new MemoryStream())
                             {
-                                ScreenShot.GetScreenShot().Save(memoryStream, ImageFormat.Png);
-                                bytess = memoryStream.GetBuffer();
-                                MessageBox.Show(memoryStream.Length.ToString());
+                                ScreenShot.GetScreenShot().Save(memoryStream, ImageFormat.Jpeg);
+                                byte[] bytess = memoryStream.GetBuffer();
+                                
+                                int sendedBytes = 0;
+                                int bufSize = 1024;
+
+                                while (sendedBytes < bytess.Length)
+                                {
+                                    sendedBytes += handler.Send(bytess, sendedBytes, bufSize, SocketFlags.None);
+                                }
+                                //MessageBox.Show("Sended");
                             }
-                            handler.Send(bytess);*/
+
                             break;
                         case Buttons.PreviousSlide:
                             System.Windows.Forms.SendKeys.SendWait("{LEFT}");
