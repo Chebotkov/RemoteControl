@@ -1,5 +1,6 @@
 package com.example.coursework;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
@@ -8,15 +9,19 @@ import android.media.ImageReader;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Array;
@@ -41,12 +46,12 @@ public class ControlActivity extends AppCompatActivity {
     private String ipAddress;
     private int port = 10000;
     private byte command;
-    int bufferSize = 1024;
-    Bitmap bmp;
-    byte[] totalBytes = new byte[bufferSize*bufferSize];
-    int receivedBytesLength = 0;
+    private int bufferSize = 8;
+    private byte[] totalBytes;
+    private boolean isSendingMust;
     OnlineRecognizer recognizer;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,8 +73,20 @@ public class ControlActivity extends AppCompatActivity {
 
         Bundle arguments = getIntent().getExtras();
         ipAddress = arguments.get("IP").toString();
-
         setContentView(R.layout.activity_control);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.settings, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.isChecked()) item.setChecked(true);
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void onClick (View view) {
@@ -95,6 +112,8 @@ public class ControlActivity extends AppCompatActivity {
             }
             case R.id.PreviousSlide:
             {
+                @SuppressLint("ResourceType") Toast toast = Toast.makeText(this, String.valueOf(((MenuItem)findViewById(R.menu.settings)).isChecked()), Toast.LENGTH_LONG);
+                toast.show();
                 command = Commands.previousSlide;
                 new SenderThread().execute();
                 break;
@@ -119,18 +138,32 @@ public class ControlActivity extends AppCompatActivity {
 
                     if(command == Commands.nextSlide)
                     {
+                        InputStreamReader inputStreamReader = new InputStreamReader(socket.getInputStream());
+
+                        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                        int receivedBytesLength = Integer.parseInt(bufferedReader.readLine());
+                        totalBytes = new byte[receivedBytesLength];
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                         int currentPosition = 0;
                         byte[] receivedBytes = new byte[bufferSize];
                         while ((in.read(receivedBytes)) > -1) {
                             for (int i = currentPosition, j = 0; j < receivedBytes.length; i++, j++)
                             {
+                                if (i >= totalBytes.length)
+                                {
+                                    break;
+                                }
+
                                 totalBytes[i] = receivedBytes[j];
                             }
 
                             currentPosition+=receivedBytes.length;
                         }
-
-                        receivedBytesLength = currentPosition;
                     }
                 }
                 catch (java.io.IOException e) {
@@ -153,10 +186,14 @@ public class ControlActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if (command == Commands.nextSlide) {
-                ImageView image = findViewById(R.id.Screenshot);
-                Bitmap bmp = BitmapFactory.decodeByteArray(totalBytes, 0, totalBytes.length);
-                image.setImageBitmap(Bitmap.createScaledBitmap(bmp, 1366,
-                        768, false));
+                try {
+                    ImageView image = findViewById(R.id.Screenshot);
+                    Bitmap bmp = BitmapFactory.decodeByteArray(totalBytes, 0, totalBytes.length);
+                    image.setImageBitmap(Bitmap.createScaledBitmap(bmp, bmp.getWidth(),
+                            bmp.getHeight(), false));
+                }
+                catch (Exception e) {
+                }
             }
         }
     }

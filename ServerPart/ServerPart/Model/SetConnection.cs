@@ -4,11 +4,13 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
+using System.Threading;
 using System.Windows;
 
 namespace ServerPart.Model
 {
-    public enum Buttons { StartPresentation = 1, PreviousSlide, NextSlide, EndPresentation, leftbutton, rightbutton, SymbolRecieved = 50, GetDrives = 100, GetPresentations, IsFileExists, RunFile, RunPresentation, PreviousDirectory };
+    public enum Buttons { StartPresentation = 1, PreviousSlide, NextSlide, EndPresentation, leftbutton, rightbutton, ResponseReceived, SymbolRecieved = 50, GetDrives = 100, GetPresentations, IsFileExists, RunFile, RunPresentation, PreviousDirectory };
 
     public class ServerCreator
     {
@@ -29,9 +31,9 @@ namespace ServerPart.Model
 
         public ServerCreator(IPAddress ipAddress, int port) : this(ipAddress)
         {
-            if(port < 0 || port > 65535)
+            if (port < 0 || port > 65535)
             {
-                throw new ArgumentOutOfRangeException(String.Format("Wrong number of port {0}", nameof(ipAddress))); 
+                throw new ArgumentOutOfRangeException(String.Format("Wrong number of port {0}", nameof(ipAddress)));
             }
 
             this.port = port;
@@ -60,7 +62,7 @@ namespace ServerPart.Model
                     byte[] recBytes = new byte[1024];
                     int nBytes = handler.Receive(recBytes);
                     switch ((Buttons)recBytes[0])
-                    {                         
+                    {
                         case Buttons.SymbolRecieved:
                             {
                                 string symbol = DataBinary.GetNormalRepresentation<string>(recBytes, 1, recBytes.Length - 2);
@@ -69,7 +71,7 @@ namespace ServerPart.Model
                                     System.Windows.Forms.SendKeys.SendWait(" ");
                                 }
                                 else
-                                System.Windows.Forms.SendKeys.SendWait(String.Concat("{", symbol, "}"));
+                                    System.Windows.Forms.SendKeys.SendWait(String.Concat("{", symbol, "}"));
                                 break;
                             }
                         case Buttons.leftbutton:
@@ -83,20 +85,22 @@ namespace ServerPart.Model
                             break;
                         case Buttons.NextSlide:
                             System.Windows.Forms.SendKeys.SendWait("{RIGHT}");
-                            
+
                             using (MemoryStream memoryStream = new MemoryStream())
                             {
                                 ScreenShot.GetScreenShot().Save(memoryStream, ImageFormat.Jpeg);
                                 byte[] bytess = memoryStream.GetBuffer();
-                                
-                                int sendedBytes = 0;
-                                int bufSize = 1024;
 
+                                int sendedBytes = 0;
+                                int bufSize = 8;
+                                
+                                handler.Send(Encoding.Default.GetBytes(bytess.Length.ToString() + "\n"));
                                 while (sendedBytes < bytess.Length)
                                 {
-                                    sendedBytes += handler.Send(bytess, sendedBytes, bufSize, SocketFlags.None);
+                                    sendedBytes += handler.Send(bytess, sendedBytes, bytess.Length - sendedBytes > bufSize ? bufSize : bytess.Length - sendedBytes, SocketFlags.None);
                                 }
-                                //MessageBox.Show("Sended");
+
+                                handler.Send(bytess);
                             }
 
                             break;
