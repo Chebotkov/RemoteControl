@@ -61,7 +61,10 @@ namespace ServerPart.Model
                     // Getting data
                     byte[] recBytes = new byte[1024];
                     int nBytes = handler.Receive(recBytes);
-                    switch ((Buttons)recBytes[0])
+
+                    bool isSendingMust  = recBytes[0] > 0 ? true : false;
+
+                    switch ((Buttons)recBytes[1])
                     {
                         case Buttons.SymbolRecieved:
                             {
@@ -85,24 +88,6 @@ namespace ServerPart.Model
                             break;
                         case Buttons.NextSlide:
                             System.Windows.Forms.SendKeys.SendWait("{RIGHT}");
-
-                            using (MemoryStream memoryStream = new MemoryStream())
-                            {
-                                ScreenShot.GetScreenShot().Save(memoryStream, ImageFormat.Jpeg);
-                                byte[] bytess = memoryStream.GetBuffer();
-
-                                int sendedBytes = 0;
-                                int bufSize = 8;
-                                
-                                handler.Send(Encoding.Default.GetBytes(bytess.Length.ToString() + "\n"));
-                                while (sendedBytes < bytess.Length)
-                                {
-                                    sendedBytes += handler.Send(bytess, sendedBytes, bytess.Length - sendedBytes > bufSize ? bufSize : bytess.Length - sendedBytes, SocketFlags.None);
-                                }
-
-                                handler.Send(bytess);
-                            }
-
                             break;
                         case Buttons.PreviousSlide:
                             System.Windows.Forms.SendKeys.SendWait("{LEFT}");
@@ -178,6 +163,27 @@ namespace ServerPart.Model
                                 break;
                             }
                     }
+
+                    if (isSendingMust)
+                    {
+                        using (MemoryStream memoryStream = new MemoryStream())
+                        {
+                            ScreenShot.GetScreenShot().Save(memoryStream, ImageFormat.Jpeg);
+                            byte[] bytess = memoryStream.GetBuffer();
+
+                            int sendedBytes = 0;
+                            int bufSize = 8;
+
+                            handler.Send(Encoding.Default.GetBytes(bytess.Length.ToString() + "\n"));
+                            while (sendedBytes < bytess.Length)
+                            {
+                                sendedBytes += handler.Send(bytess, sendedBytes, bytess.Length - sendedBytes > bufSize ? bufSize : bytess.Length - sendedBytes, SocketFlags.None);
+                            }
+
+                            handler.Send(bytess);
+                        }
+                    }
+
                     // Socket release
                     handler.Shutdown(SocketShutdown.Both);
                     handler.Close();

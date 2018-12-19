@@ -51,7 +51,6 @@ public class ControlActivity extends AppCompatActivity {
     private boolean isSendingMust;
     OnlineRecognizer recognizer;
 
-    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +83,11 @@ public class ControlActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.isChecked()) item.setChecked(true);
+        if (item.getItemId() == R.id.GetImage) {
+            if(!item.isChecked()) item.setChecked(true);
+            else item.setChecked(false);
+            isSendingMust = item.isChecked();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -112,8 +115,6 @@ public class ControlActivity extends AppCompatActivity {
             }
             case R.id.PreviousSlide:
             {
-                @SuppressLint("ResourceType") Toast toast = Toast.makeText(this, String.valueOf(((MenuItem)findViewById(R.menu.settings)).isChecked()), Toast.LENGTH_LONG);
-                toast.show();
                 command = Commands.previousSlide;
                 new SenderThread().execute();
                 break;
@@ -134,19 +135,20 @@ public class ControlActivity extends AppCompatActivity {
                     DataOutputStream out = new DataOutputStream(outputStream);
                     DataInputStream in = new DataInputStream(socket.getInputStream());
 
-                    out.write(command);
-
-                    if(command == Commands.nextSlide)
+                    byte[] parcel = new byte[2];
+                    if(isSendingMust)
                     {
-                        InputStreamReader inputStreamReader = new InputStreamReader(socket.getInputStream());
+                        parcel[0] = 1;
+                        parcel[1] = command;
+                        out.write(parcel);
 
+                        InputStreamReader inputStreamReader = new InputStreamReader(socket.getInputStream());
                         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                         int receivedBytesLength = Integer.parseInt(bufferedReader.readLine());
                         totalBytes = new byte[receivedBytesLength];
                         try {
                             Thread.sleep(50);
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                         int currentPosition = 0;
@@ -164,6 +166,12 @@ public class ControlActivity extends AppCompatActivity {
 
                             currentPosition+=receivedBytes.length;
                         }
+                    }
+                    else
+                    {
+                        parcel[0] = 0;
+                        parcel[1] = command;
+                        out.write(parcel);
                     }
                 }
                 catch (java.io.IOException e) {
@@ -185,15 +193,13 @@ public class ControlActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            if (command == Commands.nextSlide) {
-                try {
-                    ImageView image = findViewById(R.id.Screenshot);
-                    Bitmap bmp = BitmapFactory.decodeByteArray(totalBytes, 0, totalBytes.length);
-                    image.setImageBitmap(Bitmap.createScaledBitmap(bmp, bmp.getWidth(),
-                            bmp.getHeight(), false));
-                }
-                catch (Exception e) {
-                }
+            try {
+                ImageView image = findViewById(R.id.Screenshot);
+                Bitmap bmp = BitmapFactory.decodeByteArray(totalBytes, 0, totalBytes.length);
+                image.setImageBitmap(Bitmap.createScaledBitmap(bmp, bmp.getWidth(),
+                        bmp.getHeight(), false));
+            }
+            catch (Exception e) {
             }
         }
     }
