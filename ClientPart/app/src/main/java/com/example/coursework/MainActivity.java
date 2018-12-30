@@ -7,13 +7,9 @@ import android.widget.EditText;
 import android.view.View;
 import android.widget.Toast;
 
-import java.net.InetAddress;
-
-import AdditionalClasses.ConnectionCreator;
 import AdditionalClasses.Matcher;
 
 public class MainActivity extends AppCompatActivity {
-    private ConnectionCreator sender;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

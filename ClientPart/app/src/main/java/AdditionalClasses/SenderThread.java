@@ -2,25 +2,29 @@ package AdditionalClasses;
 
 import android.os.AsyncTask;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
 public class SenderThread extends AsyncTask<Void, Void, Void> {
-    private byte command ;
     private int port;
     private String ipAddress;
 
-    public SenderThread(String ipAddress, int port, byte command)
+    public SenderThread(String ipAddress, int port)
     {
         if (ipAddress == null)
         {
             throw new NullPointerException("IP address is null");
         }
 
+        if(port < 0 || port > 65535)
+        {
+            throw new IllegalArgumentException("Wrong port value");
+        }
+
         this.ipAddress = ipAddress;
-        this.command = command;
         this.port = port;
     }
 
@@ -34,11 +38,11 @@ public class SenderThread extends AsyncTask<Void, Void, Void> {
 
                 OutputStream outputStream = socket.getOutputStream();
                 DataOutputStream out = new DataOutputStream(outputStream);
+                DataInputStream in = new DataInputStream(socket.getInputStream());
 
-                if (command != 0)
-                {
-                    out.write(command);
-                }
+                byte[] parcel = new byte[2];
+                parcel[0] = 0;
+                out.write(parcel);
             }
             catch (java.io.IOException e) {
                 e.printStackTrace();
@@ -55,5 +59,10 @@ public class SenderThread extends AsyncTask<Void, Void, Void> {
         }
 
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+
     }
 }

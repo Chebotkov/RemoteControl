@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace ServerPart.Model
 {
-    public enum Buttons { StartPresentation = 1, PreviousSlide, NextSlide, EndPresentation, leftbutton, rightbutton, ResponseReceived, SymbolRecieved = 50, GetDrives = 100, GetPresentations, IsFileExists, RunFile, RunPresentation, PreviousDirectory };
+    public enum Buttons { StartPresentation = 1, PreviousSlide, NextSlide, EndPresentation, MoveMouse, leftbutton, rightbutton, ResponseReceived, SymbolRecieved = 50, GetDrives = 100, GetPresentations, IsFileExists, RunFile, RunPresentation, PreviousDirectory };
 
     public class ServerCreator
     {
@@ -94,6 +94,22 @@ namespace ServerPart.Model
                             break;
                         case Buttons.EndPresentation:
                             System.Windows.Forms.SendKeys.SendWait("{ESC}");
+                            break;
+                        case Buttons.MoveMouse:
+                            byte[] firstFloat = new byte[4];
+                            for (int i = 2, j = 0; i < 6; i++, j++)
+                            {
+                                firstFloat[j] = recBytes[i]; 
+                            }
+
+                            byte[] secondFloat = new byte[4];
+                            for (int i = 6, j = 0; i < 10; i++, j++)
+                            {
+                                secondFloat[j] = recBytes[i];
+                            }
+
+                            MessageBox.Show(Math.Round(System.BitConverter.ToSingle(firstFloat, 0), 1).ToString() + "; " + Math.Round(System.BitConverter.ToSingle(secondFloat, 0), 1).ToString());
+                            
                             break;
                         case Buttons.GetDrives:
                             {
